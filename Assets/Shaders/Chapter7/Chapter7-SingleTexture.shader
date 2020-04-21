@@ -18,7 +18,7 @@
 			
 			fixed4 _Color;
 			sampler2D _MainTex;
-			float4 _MainTex_ST;
+			float4 _MainTex_ST;//固定命名
 			fixed4 _Specular;
 			float _Gloss;
 			
@@ -43,10 +43,10 @@
 				
 				o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
 				
-				o.uv = v.texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;
+				o.uv = v.texcoord.xy * _MainTex_ST.xy + _MainTex_ST.zw;//缩放+偏移
 				// Or just call the built-in function
 //				o.uv = TRANSFORM_TEX(v.texcoord, _MainTex);
-				
+				//纹理的效果
 				return o;
 			}
 			
@@ -55,7 +55,7 @@
 				fixed3 worldLightDir = normalize(UnityWorldSpaceLightDir(i.worldPos));
 				
 				// Use the texture to sample the diffuse color
-				fixed3 albedo = tex2D(_MainTex, i.uv).rgb * _Color.rgb;
+				fixed3 albedo = tex2D(_MainTex, i.uv).rgb * _Color.rgb;//包含了贴图和滤镜？
 				
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * albedo;
 				
