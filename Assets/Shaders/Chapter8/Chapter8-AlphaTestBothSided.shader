@@ -11,7 +11,7 @@
 			Tags { "LightMode"="ForwardBase" }
 			
 			// Turn off culling
-			Cull Off
+			Cull Front
 			
 			CGPROGRAM
 			

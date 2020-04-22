@@ -101,6 +101,7 @@ Shader "Unity Shaders Book/Chapter 7/Normal Map In Tangent Space" {
 				//wToT = the inverse of tToW = the transpose of tToW as long as tToW is an orthogonal matrix.
 				float3x3 worldToTangent = float3x3(worldTangent, worldBinormal, worldNormal);
 
+				//全部到切线空间
 				// Transform the light and view dir from world space to tangent space
 				o.lightDir = mul(worldToTangent, WorldSpaceLightDir(v.vertex));
 				o.viewDir = mul(worldToTangent, WorldSpaceViewDir(v.vertex));
@@ -136,7 +137,7 @@ Shader "Unity Shaders Book/Chapter 7/Normal Map In Tangent Space" {
 //				tangentNormal.z = sqrt(1.0 - saturate(dot(tangentNormal.xy, tangentNormal.xy)));
 				
 				// Or mark the texture as "Normal map", and use the built-in funciton
-				tangentNormal = UnpackNormal(packedNormal);
+				tangentNormal = UnpackNormal(packedNormal);//按照像素和法线的转换公式映射回去
 				tangentNormal.xy *= _BumpScale;
 				tangentNormal.z = sqrt(1.0 - saturate(dot(tangentNormal.xy, tangentNormal.xy)));
 				

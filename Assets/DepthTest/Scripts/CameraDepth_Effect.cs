@@ -39,7 +39,7 @@ public class CameraDepth_Effect : MonoBehaviour {
 			this.dis += Time.deltaTime * this.velocity;
 		}
 
-		//无人深空中按c开启扫描
+		//按c开启扫描
 		if (Input.GetKeyDown(KeyCode.C))
 		{
 			this.isScanning = true;
@@ -51,6 +51,7 @@ public class CameraDepth_Effect : MonoBehaviour {
 		if (postEffectMat == null)
 		{
 			mat.SetFloat("_ScanDistance", dis);
+			
 			Graphics.Blit(source, destination);
 		}
 		else
