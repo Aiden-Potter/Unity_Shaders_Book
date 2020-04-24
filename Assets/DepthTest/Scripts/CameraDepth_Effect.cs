@@ -8,16 +8,18 @@ public class CameraDepth_Effect : MonoBehaviour {
 
 	private Camera camera;
 	public Material postEffectMat;
+	public GameObject depthPlane;
 	public GameObject moviePlane;
 	public Texture depthTexture;
-
+	public Texture movieTexture;
+	public Camera realCamera;
 	#region 字段
 
 	public Material mat;
 	public float velocity = 5;
 	private bool isScanning;
 	private float dis;
-
+	public Vector3 point;
 	#endregion
 
 
@@ -25,15 +27,20 @@ public class CameraDepth_Effect : MonoBehaviour {
 		camera = GetComponent<Camera>();
 		camera.depthTextureMode = DepthTextureMode.Depth;
 		//Debug.Log(moviePlane.GetComponent<MeshRenderer>().material.mainTexture);
-		depthTexture = moviePlane.GetComponent<MeshRenderer>().material.mainTexture;
-		//postEffectMat.SetTexture("_DepthTex", depthTexture); 
+		depthTexture = depthPlane.GetComponent<MeshRenderer>().material.mainTexture;//直接获得plane的
+		movieTexture = realCamera.targetTexture;
+
+
+		postEffectMat.SetTexture("_DepthTex", depthTexture);
+		postEffectMat.SetTexture("_RealTex", movieTexture);
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		Debug.Log(camera.depthTextureMode.ToString());
+		//Debug.Log();
+		//Debug.Log(realCamera.ScreenToWorldPoint(point));
 		//postEffectMat.SetTexture("_DepthTex", depthTexture);
-
+		//Debug.Log("Depth："+postEffectMat.GetFloat("_Z"));
 		if (this.isScanning)
 		{
 			this.dis += Time.deltaTime * this.velocity;
