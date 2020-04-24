@@ -8,6 +8,8 @@ Shader "Unlit/DepthLearning_plus"
 		_DepthTex("DepthTex", 2D) = "white" {}
 		_RealTex("ReatTex",2D) = "white"{}
 		_Threshold("Threshold",Range(0,0.2)) = 0.1
+		//_ZTex("ZTex",2D) = "white"{}
+		_Z("Z",float) =0
 	}
 	SubShader
 	{
@@ -32,7 +34,9 @@ Shader "Unlit/DepthLearning_plus"
 			sampler2D _RealTex;
 			float4 _RealTex_ST;
 			float _Threshold;
-
+			//sampler2D _ZTex;
+			//float4 _ZTex_ST;
+			float _Z;
 			#include "UnityCG.cginc"
 			struct a2v {
 				float4 vertex : POSITION;
@@ -60,16 +64,18 @@ Shader "Unlit/DepthLearning_plus"
 
 				fixed linear01EyeDepth = Linear01Depth(depthTextureValue);
 				fixed depth = tex2D(_DepthTex, i.uv).r;
+				float  depthEye = LinearEyeDepth(depth);
+				_Z = depthEye;
 				fixed3 mainTex = tex2D(_MainTex, i.uv).rgb;
 				fixed3 realTex = tex2D(_RealTex, i.uv).rgb;
 				//clip(linear01EyeDepth-depth );
 				//clip(depth - linear01EyeDepth-_Threshold);
 
 
-				if (depth - linear01EyeDepth < _Threshold)
-					 return fixed4(realTex,1.0);
+				//if (depth - linear01EyeDepth < _Threshold)
+				//	 return fixed4(depth, depth, depth,1.0);
 				//return fixed4(linear01EyeDepth, linear01EyeDepth, linear01EyeDepth, 1.0);
-				return fixed4(mainTex, 1.0);
+				return fixed4(0, _Z, _Z, 1.0);
 			}
 
 			ENDCG

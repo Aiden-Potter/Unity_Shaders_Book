@@ -18,6 +18,7 @@ public class MoviePlay : MonoBehaviour {
 	void Update () {
 		if(Input.GetKeyDown(KeyCode.Space))
 		{
+			mat.mainTexture = movieTexture;
 			Debug.Log("Switch");
 			if(movieTexture.isPlaying)
 			{

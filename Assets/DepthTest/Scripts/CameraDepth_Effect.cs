@@ -33,7 +33,7 @@ public class CameraDepth_Effect : MonoBehaviour {
 	void Update () {
 		Debug.Log(camera.depthTextureMode.ToString());
 		//postEffectMat.SetTexture("_DepthTex", depthTexture);
-
+		Debug.Log("Depth："+postEffectMat.GetFloat("_Z"));
 		if (this.isScanning)
 		{
 			this.dis += Time.deltaTime * this.velocity;
