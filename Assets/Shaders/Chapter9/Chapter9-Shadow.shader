@@ -147,5 +147,6 @@
 			ENDCG
 		}
 	}
+	//利用默认的阴影投射
 	FallBack "Specular"
 }

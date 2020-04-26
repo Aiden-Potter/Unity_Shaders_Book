@@ -7,6 +7,7 @@
 	SubShader {
 		Tags { "RenderType"="Opaque" }
 		
+		//Base Pass 里面要算环境光，他处理的像素光源是平行光
 		Pass {
 			// Pass for ambient light & first pixel light (directional light)
 			Tags { "LightMode"="ForwardBase" }
@@ -14,8 +15,8 @@
 			CGPROGRAM
 			
 			// Apparently need to add this declaration 
-			#pragma multi_compile_fwdbase	
-			
+			#pragma multi_compile_fwdbase	//预编译指令保证光照变量可以正确的赋值
+
 			#pragma vertex vert
 			#pragma fragment frag
 			
@@ -27,7 +28,7 @@
 			
 			struct a2v {
 				float4 vertex : POSITION;
-				float3 normal : NORMAL;
+				float3 normal : NORMAL;//模型空间的法向量
 			};
 			
 			struct v2f {
@@ -43,7 +44,7 @@
 				o.worldNormal = UnityObjectToWorldNormal(v.normal);
 				
 				o.worldPos = mul(unity_ObjectToWorld, v.vertex).xyz;
-				
+				//模型空间的点转换到世界坐标
 				return o;
 			}
 			
@@ -54,23 +55,23 @@
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 				
 			 	fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * max(0, dot(worldNormal, worldLightDir));
-
+				//漫反射 = 光强*材质*角度点乘
 			 	fixed3 viewDir = normalize(_WorldSpaceCameraPos.xyz - i.worldPos.xyz);
 			 	fixed3 halfDir = normalize(worldLightDir + viewDir);
 			 	fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(worldNormal, halfDir)), _Gloss);
 
-				fixed atten = 1.0;
+				fixed atten = 1.0;//衰减量
 				
 				return fixed4(ambient + (diffuse + specular) * atten, 1.0);
 			}
 			
 			ENDCG
 		}
-	
+		//Additional Pass
 		Pass {
 			// Pass for other pixel lights
 			Tags { "LightMode"="ForwardAdd" }
-			
+			//和上次的渲染结果进行混合
 			Blend One One
 		
 			CGPROGRAM
@@ -112,6 +113,7 @@
 			
 			fixed4 frag(v2f i) : SV_Target {
 				fixed3 worldNormal = normalize(i.worldNormal);
+			//平行光算法比较简单，而其他光需要两点
 				#ifdef USING_DIRECTIONAL_LIGHT
 					fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
 				#else
