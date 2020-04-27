@@ -28,6 +28,6 @@ public class RenderCubemapWizard : ScriptableWizard {
 	[MenuItem("GameObject/Render into Cubemap")]
 	static void RenderCubemap () {
 		ScriptableWizard.DisplayWizard<RenderCubemapWizard>(
-			"Render cubemap", "Render!");
+			"Render cubemap", "Render into Cubemap!");
 	}
 }

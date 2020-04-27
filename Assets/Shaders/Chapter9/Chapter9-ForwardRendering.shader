@@ -50,14 +50,14 @@
 			
 			fixed4 frag(v2f i) : SV_Target {
 				fixed3 worldNormal = normalize(i.worldNormal);
-				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
+				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);//平行光角度
 				
 				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
 				
 			 	fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * max(0, dot(worldNormal, worldLightDir));
 				//漫反射 = 光强*材质*角度点乘
 			 	fixed3 viewDir = normalize(_WorldSpaceCameraPos.xyz - i.worldPos.xyz);
-			 	fixed3 halfDir = normalize(worldLightDir + viewDir);
+			 	fixed3 halfDir = normalize(worldLightDir + viewDir);//BlinnPhong模型
 			 	fixed3 specular = _LightColor0.rgb * _Specular.rgb * pow(max(0, dot(worldNormal, halfDir)), _Gloss);
 
 				fixed atten = 1.0;//衰减量
@@ -117,7 +117,7 @@
 				#ifdef USING_DIRECTIONAL_LIGHT
 					fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
 				#else
-					fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz - i.worldPos.xyz);
+					fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz - i.worldPos.xyz);//由模型点指向光源点
 				#endif
 				
 				fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * max(0, dot(worldNormal, worldLightDir));
