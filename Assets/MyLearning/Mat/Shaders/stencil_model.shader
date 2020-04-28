@@ -12,9 +12,9 @@ Shader "Custom/stencil_model" {
 			Pass {
 
 				Stencil {
-						Ref 1
+						Ref 0
 						Comp Equal
-						Pass Zero
+						Pass Replace
 						Fail Replace
 						}
 				CGPROGRAM

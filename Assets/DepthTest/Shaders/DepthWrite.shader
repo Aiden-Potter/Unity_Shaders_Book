@@ -53,7 +53,7 @@ Shader "Unlit/DepthWrite"
 			fixed frag_write(v2f i) : SV_Depth
 			{
 				fixed depth = tex2D(_DepthTex, i.uv).r;
-				float depthZ = LinearEyeDepth(depth);
+				//float depthZ = LinearEyeDepth(depth);
 				return depth;
 			}
 
@@ -104,7 +104,7 @@ Shader "Unlit/DepthWrite"
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-				float depthTextureValue = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv);
+				fixed depthTextureValue = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv);
 
 				fixed linear01EyeDepth = Linear01Depth(depthTextureValue);
 				fixed depth = tex2D(_DepthTex, i.uv).r;
@@ -116,10 +116,11 @@ Shader "Unlit/DepthWrite"
 				//clip(depth - linear01EyeDepth-_Threshold);
 
 
-				if (depth - linear01EyeDepth < _Threshold)
-					 return fixed4(realTex,1.0);
-				//return fixed4(linear01EyeDepth, linear01EyeDepth, linear01EyeDepth, 1.0);
-				return fixed4(mainTex, 1.0);
+				//if (depth - linear01EyeDepth < _Threshold)
+				//	 return fixed4(realTex,1.0);
+				return fixed4(linear01EyeDepth, linear01EyeDepth, linear01EyeDepth, 1.0);
+				//return fixed4(depthTextureValue, depthTextureValue, depthTextureValue, 1.0);
+				//return fixed4(mainTex, 1.0);
 			}
 
 			ENDCG
