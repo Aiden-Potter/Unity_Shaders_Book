@@ -1,6 +1,6 @@
 ﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Unlit/DepthPoint"
+Shader "Unlit/DepthLearning_plus"
 {
 	Properties
 	{
@@ -73,9 +73,9 @@ Shader "Unlit/DepthPoint"
 
 
 				if (depth - linear01EyeDepth < _Threshold)
-					 return fixed4(realTex,1.0);
+					 return fixed4(depth, depth, depth,1.0);
 				//return fixed4(linear01EyeDepth, linear01EyeDepth, linear01EyeDepth, 1.0);
-				return fixed4(mainTex, 1.0);
+				return fixed4(0, _Z, _Z, 1.0);
 			}
 
 			ENDCG

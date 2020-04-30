@@ -116,11 +116,11 @@ Shader "Unlit/DepthWrite"
 				//clip(depth - linear01EyeDepth-_Threshold);
 
 
-				//if (depth - linear01EyeDepth < _Threshold)
-				//	 return fixed4(realTex,1.0);
-				return fixed4(linear01EyeDepth, linear01EyeDepth, linear01EyeDepth, 1.0);
+				if (depth - linear01EyeDepth < _Threshold)
+					 return fixed4(realTex,1.0);
+				//return fixed4(linear01EyeDepth, linear01EyeDepth, linear01EyeDepth, 1.0);
 				//return fixed4(depthTextureValue, depthTextureValue, depthTextureValue, 1.0);
-				//return fixed4(mainTex, 1.0);
+				return fixed4(mainTex, 1.0);
 			}
 
 			ENDCG

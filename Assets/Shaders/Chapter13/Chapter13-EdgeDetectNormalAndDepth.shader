@@ -83,6 +83,7 @@
 			fixed4 onlyEdgeColor = lerp(_EdgeColor, _BackgroundColor, edge);
 			
 			return lerp(withEdgeColor, onlyEdgeColor, _EdgeOnly);
+			
 		}
 		
 		ENDCG

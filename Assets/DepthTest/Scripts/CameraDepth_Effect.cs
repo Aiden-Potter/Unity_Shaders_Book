@@ -13,8 +13,8 @@ public class CameraDepth_Effect : MonoBehaviour {
 	public Texture depthTexture;
 	public Texture movieTexture;
 	public Camera realCamera;
-	#region 字段
 
+	#region 字段
 	public Material mat;
 	public float velocity = 5;
 	private bool isScanning;
@@ -27,10 +27,8 @@ public class CameraDepth_Effect : MonoBehaviour {
 		camera = GetComponent<Camera>();
 		camera.depthTextureMode = DepthTextureMode.Depth;
 		//Debug.Log(moviePlane.GetComponent<MeshRenderer>().material.mainTexture);
-		depthTexture = depthPlane.GetComponent<MeshRenderer>().material.mainTexture;//直接获得plane的
+		depthTexture = depthPlane.GetComponent<MeshRenderer>().material.mainTexture;//直接获得plane的,不会受到光照的影响
 		movieTexture = realCamera.targetTexture;
-
-
 		postEffectMat.SetTexture("_DepthTex", depthTexture);
 		postEffectMat.SetTexture("_RealTex", movieTexture);
 	}
