@@ -6,8 +6,8 @@ Shader "Unlit/DepthPoint"
 	{
 		_MainTex ("MainTex", 2D) = "white" {}
 		_DepthTex("DepthTex", 2D) = "white" {}
-		_RealTex("ReatTex",2D) = "white"{}
-		_Threshold("Threshold",Range(0,0.2)) = 0.1
+		_RealTex("RealTex",2D) = "white"{}
+		_Threshold("Threshold",Range(-0.2,0.2)) = 0.1
 		//_ZTex("ZTex",2D) = "white"{}
 		_Z("Z",float) =0
 	}
@@ -62,17 +62,16 @@ Shader "Unlit/DepthPoint"
 			{
 				float depthTextureValue = SAMPLE_DEPTH_TEXTURE(_CameraDepthTexture, i.uv);
 
-				fixed linear01EyeDepth = Linear01Depth(depthTextureValue);
+				fixed linear01Depth = Linear01Depth(depthTextureValue);
 				fixed depth = tex2D(_DepthTex, i.uv).r;
-				float  depthEye = LinearEyeDepth(depth);
-				_Z = depthEye;
+
 				fixed3 mainTex = tex2D(_MainTex, i.uv).rgb;
 				fixed3 realTex = tex2D(_RealTex, i.uv).rgb;
 				//clip(linear01EyeDepth-depth );
 				//clip(depth - linear01EyeDepth-_Threshold);
 
 
-				if (depth - linear01EyeDepth < _Threshold)
+				if (depth - linear01Depth < _Threshold)
 					 return fixed4(realTex,1.0);
 				//return fixed4(linear01EyeDepth, linear01EyeDepth, linear01EyeDepth, 1.0);
 				return fixed4(mainTex, 1.0);
