@@ -49,7 +49,7 @@
 				// Which means the normal dir is fixed
 				// Or if _VerticalBillboarding equals 0, the y of normal is 0
 				// Which means the up dir is fixed
-				normalDir.y =normalDir.y * _VerticalBillboarding;
+				normalDir.y = normalDir.y * _VerticalBillboarding;
 				normalDir = normalize(normalDir);
 				// Get the approximate up dir
 				// If normal dir is already towards up, then the up dir is towards front

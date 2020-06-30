@@ -66,6 +66,7 @@
 			// 1 - if normals and depth are similar enough
 			// 0 - otherwise
 			return isSameNormal * isSameDepth ? 1.0 : 0.0;
+			//return isSameNormal?1.0f:0.0;
 		}
 		
 		fixed4 fragRobertsCrossDepthAndNormal(v2f i) : SV_Target {

@@ -87,7 +87,7 @@
 				
 				fixed3 diffuse = _LightColor0.rgb * albedo * max(0, dot(tangentNormal, tangentLightDir));
 
-				fixed t = 1 - smoothstep(0.0, _LineWidth, burn.r - _BurnAmount);
+				fixed t = 1 - smoothstep(0.0, _LineWidth, burn.r - _BurnAmount);//t的变换范围0-1，smoothstep的变换范围是0-1的映射
 				fixed3 burnColor = lerp(_BurnFirstColor, _BurnSecondColor, t);
 				burnColor = pow(burnColor, 5);
 				
